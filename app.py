@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify, send_file
 import openpyxl
 import os
 
@@ -19,6 +19,10 @@ def init_excel():
                    'Raza Mascota', 'Número Garaje', 'Tiene Bicicleta', 'Marca Bicicleta', 'Color Bicicleta', 'Nombre Emergencia', 
                    'Parentesco Emergencia', 'Teléfono Emergencia'])
         wb.save(DATABASE)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
