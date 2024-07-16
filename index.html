@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Residencia</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <form id="residenceForm">
+        <!-- Datos del residente -->
+        <h2>1. Datos del residente</h2>
+        <label>Nombre:</label>
+        <input type="text" name="nombre_residente"><br>
+        <label>Teléfono:</label>
+        <input type="tel" name="telefono_residente"><br>
+        <label>Celular(es):</label>
+        <input type="tel" name="celular_residente"><br>
+        <label>Cédula:</label>
+        <input type="text" name="cedula_residente"><br>
+        <label>Propietario:</label>
+        <input type="radio" name="tipo_residente" value="propietario"><br>
+        <label>Arrendatario:</label>
+        <input type="radio" name="tipo_residente" value="arrendatario"><br>
+        <label>Arrendatario (Inmobiliaria):</label>
+        <input type="radio" name="tipo_residente" value="arrendatario_inmobiliaria"><br>
+        <label>Nombre de Inmobiliaria:</label>
+        <input type="text" name="nombre_inmobiliaria"><br>
+        <label>Teléfono de Inmobiliaria:</label>
+        <input type="tel" name="telefono_inmobiliaria"><br>
+
+        <!-- Datos del propietario del apartamento -->
+        <h2>2. Datos del PROPIETARIO del Apartamento</h2>
+        <label>Nombre:</label>
+        <input type="text" name="nombre_propietario"><br>
+        <label>Dirección:</label>
+        <input type="text" name="direccion_propietario"><br>
+        <label>Teléfono:</label>
+        <input type="tel" name="telefono_propietario"><br>
+        <label>Ciudad:</label>
+        <input type="text" name="ciudad_propietario"><br>
+        <label>Correo electrónico:</label>
+        <input type="email" name="email_propietario"><br>
+        <label>Cédula:</label>
+        <input type="text" name="cedula_propietario"><br>
+        <label>Celular:</label>
+        <input type="tel" name="celular_propietario"><br>
+
+        <!-- Datos de los residentes del apartamento -->
+        <h2>3. Datos de los residentes del apartamento que viven actualmente</h2>
+        <!-- Se pueden añadir múltiples residentes -->
+        <div id="residentes_container">
+            <div class="residente">
+                <label>Nombre:</label>
+                <input type="text" name="nombre_residente_actual[]"><br>
+                <label>Identificación:</label>
+                <input type="text" name="identificacion_residente_actual[]"><br>
+                <label>Profesión u oficio:</label>
+                <input type="text" name="profesion_residente_actual[]"><br>
+                <label>RH:</label>
+                <input type="text" name="rh_residente_actual[]"><br>
+                <label>Edad:</label>
+                <input type="number" name="edad_residente_actual[]"><br>
+            </div>
+        </div>
+        <button type="button" onclick="addResidente()">Añadir Residente</button><br>
+
+        <!-- Datos de las personas autorizadas al ingresar al conjunto -->
+        <h2>4. Datos de las personas autorizadas al ingresar al conjunto</h2>
+        <!-- Se pueden añadir múltiples personas autorizadas -->
+        <div id="autorizados_container">
+            <div class="autorizado">
+                <label>Nombre:</label>
+                <input type="text" name="nombre_autorizado[]"><br>
+                <label>Identificación:</label>
+                <input type="text" name="identificacion_autorizado[]"><br>
+                <label>Parentesco:</label>
+                <input type="text" name="parentesco_autorizado[]"><br>
+            </div>
+        </div>
+        <button type="button" onclick="addAutorizado()">Añadir Autorizado</button><br>
+
+        <!-- Datos de los vehículos que posee -->
+        <h2>5. Datos de los vehículos que posee (automóvil o motocicleta)</h2>
+        <!-- Se pueden añadir múltiples vehículos -->
+        <div id="vehiculos_container">
+            <div class="vehiculo">
+                <label>Marca:</label>
+                <input type="text" name="marca_vehiculo[]"><br>
+                <label>Placa:</label>
+                <input type="text" name="placa_vehiculo[]"><br>
+                <label>Parqueadero Nº:</label>
+                <input type="text" name="parqueadero_vehiculo[]"><br>
+                <label>Nombre conductor:</label>
+                <input type="text" name="conductor_vehiculo[]"><br>
+                <label>Color:</label>
+                <input type="text" name="color_vehiculo[]"><br>
+                <label>Modelo:</label>
+                <input type="text" name="modelo_vehiculo[]"><br>
+            </div>
+        </div>
+        <button type="button" onclick="addVehiculo()">Añadir Vehículo</button><br>
+
+        <!-- Generalidades -->
+        <h2>6. Generalidades</h2>
+        <label>Mascotas:</label>
+        <input type="text" name="mascotas"><br>
+        <label>Raza:</label>
+        <input type="text" name="raza_mascota"><br>
+        <label>Número de garaje:</label>
+        <input type="text" name="numero_garaje"><br>
+        <label>¿Tiene bicicleta?</label>
+        <input type="checkbox" name="tiene_bicicleta"><br>
+        <label>Marca:</label>
+        <input type="text" name="marca_bicicleta"><br>
+        <label>Color:</label>
+        <input type="text" name="color_bicicleta"><br>
+
+        <!-- Datos de emergencia -->
+        <h2>8. DATOS DE LAS PERSONAS A LAS CUALES DEBEMOS AVISAR EN CASO DE UNA EMERGENCIA</h2>
+        <!-- Se pueden añadir múltiples contactos de emergencia -->
+        <div id="emergencia_container">
+            <div class="emergencia">
+                <label>Nombre:</label>
+                <input type="text" name="nombre_emergencia[]"><br>
+                <label>Parentesco:</label>
+                <input type="text" name="parentesco_emergencia[]"><br>
+                <label>Teléfono(s):</label>
+                <input type="tel" name="telefono_emergencia[]"><br>
+            </div>
+        </div>
+        <button type="button" onclick="addEmergencia()">Añadir Contacto de Emergencia</button><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
