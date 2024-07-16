@@ -9,7 +9,7 @@ document.getElementById('myForm').addEventListener('submit', async function(e) {
     });
 
     try {
-        let response = await fetch('/submit', {
+        let response = await fetch('https://basedatosviavento-production.up.railway.app/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
