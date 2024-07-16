@@ -26,7 +26,7 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    data = request.json
+    data = request.form
     wb = openpyxl.load_workbook(DATABASE)
     ws = wb.active
     row = [
