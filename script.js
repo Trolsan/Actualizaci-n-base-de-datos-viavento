@@ -1,30 +1,38 @@
-document.getElementById('residenceForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+// script.js
+document.getElementById('myForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-    const formData = new FormData(this);
-    const data = {};
+    let formData = new FormData(this);
+    let jsonData = {};
     formData.forEach((value, key) => {
-        if (!data[key]) {
-            data[key] = [];
-        }
-        data[key].push(value);
+        jsonData[key] = value;
     });
 
-    fetch('/submit', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(response => response.json())
-      .then(data => {
-          if(data.success) {
-              alert('Formulario enviado exitosamente');
-          } else {
-              alert('Error al enviar el formulario');
-          }
-      });
+    try {
+        let response = await fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
+
+        if (response.ok) {
+            let result = await response.json();
+            if (result.success) {
+                alert('Datos guardados correctamente.');
+            } else {
+                alert('Error al guardar los datos.');
+            }
+        } else {
+            alert('Error en la respuesta del servidor.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error en la conexión.');
+    }
 });
+
 
 function addResidente() {
     const container = document.getElementById('residentes_container');
