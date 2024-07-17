@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, jsonify, send_file
+from flask_cors import CORS
 import openpyxl
 import os
 
 app = Flask(__name__)
+CORS(app)  # Habilita CORS en toda la aplicación
+
 DATABASE = 'data.xlsx'
 
 # Inicializa el archivo Excel
@@ -28,7 +31,7 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    data = request.form
+    data = request.json
     wb = openpyxl.load_workbook(DATABASE)
     ws = wb.active
     row = [
