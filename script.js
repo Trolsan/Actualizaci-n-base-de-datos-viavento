@@ -1,43 +1,53 @@
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('myForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
+document.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.getElementById('data-form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-        let formData = new FormData(this);
-        let jsonData = {};
-        formData.forEach((value, key) => {
-            jsonData[key] = value;
-        });
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
 
         try {
-            let response = await fetch('https://basedatosviavento-production.up.railway.app/submit', {
+            const response = await fetch('https://basedatosviavento-production.up.railway.app/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(jsonData)
+                body: JSON.stringify(data)
             });
 
             if (response.ok) {
-                let result = await response.json();
-                if (result.success) {
-                    alert('Datos guardados correctamente.');
-                } else {
-                    alert('Error al guardar los datos.');
-                }
+                alert('Datos enviados exitosamente!');
             } else {
-                alert('Error en la respuesta del servidor.');
+                alert('Error al enviar datos.');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Error en la conexión.');
+            alert('Error al enviar datos.');
         }
     });
 
-    document.getElementById('downloadExcel').addEventListener('click', function() {
-        window.location.href = 'https://basedatosviavento-production.up.railway.app/download';
+    document.getElementById('download-btn').addEventListener('click', async () => {
+        try {
+            const response = await fetch('https://basedatosviavento-production.up.railway.app/download');
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'data.xlsx';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } else {
+                alert('Error al descargar el archivo.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al descargar el archivo.');
+        }
     });
 });
-
 
 
 function addResidente() {
