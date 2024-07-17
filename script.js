@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 alert('Error al enviar datos.');
             }
         } catch (error) {
-            console.error('Error:', error);
             alert('Error al enviar datos.');
         }
     });

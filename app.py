@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, jsonify, send_file
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import openpyxl
 import os
 
 app = Flask(__name__)
-CORS(app)  # Habilita CORS en toda la aplicación
+CORS(app, resources= {r"/*":{"origins": "https://basedatosviavento-production-38e8.up.railway.app"}})  # Habilita CORS en toda la aplicación
 
 DATABASE = 'data.xlsx'
 
@@ -76,6 +76,7 @@ def submit():
     ws.append(row)
     wb.save(DATABASE)
     return jsonify(success=True)
+
 
 @app.route('/download', methods=['GET'])
 def download():
