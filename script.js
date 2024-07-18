@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const data = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch('https://basedatosviavento-production-38e8.up.railway.app/submit', {
+            const response = await fetch('basedatosviavento-production-38e8.up.railway.app/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('download-btn').addEventListener('click', async () => {
         try {
-            const response = await fetch('https://basedatosviavento-production-38e8.up.railway.app/download');
+            const response = await fetch('basedatosviavento-production-38e8.up.railway.app/download');
             if (response.ok) {
                 const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
