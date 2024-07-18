@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
 
             if (response.ok) {
-                alert('Datos enviados exitosamente!');
+                alert('¡Datos enviados exitosamente!');
             } else {
                 alert('Error al enviar datos.');
             }

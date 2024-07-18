@@ -80,7 +80,8 @@ def submit():
 
 @app.route('/download', methods=['GET'])
 def download():
-    return send_file(DATABASE, as_attachment=True)
+    file_path = 'datos.xlsx'
+    return send_file(file_path, as_attachment=True)
 
 if __name__ == '__main__':
     init_excel()
