@@ -17,7 +17,7 @@ document.getElementById('user-form').addEventListener('submit', function(event) 
     });
 });
 
-document.getElementById('download-excel').addEventListener('click', function() {
+document.getElementById('download-btn').addEventListener('click', function() {
     fetch('/download')
     .then(response => response.blob())
     .then(blob => {
