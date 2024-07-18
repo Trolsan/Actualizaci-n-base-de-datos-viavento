@@ -1,50 +1,33 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    const form = document.getElementById('data-form');
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
+document.getElementById('user-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
 
-        try {
-            const response = await fetch('basedatosviavento-production-38e8.up.railway.app/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (response.ok) {
-                alert('¡Datos enviados exitosamente!');
-            } else {
-                alert('Error al enviar datos.');
-            }
-        } catch (error) {
-            alert('Error al enviar datos.');
-        }
+    fetch('/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        alert(result.message);
     });
+});
 
-    document.getElementById('download-btn').addEventListener('click', async () => {
-        try {
-            const response = await fetch('basedatosviavento-production-38e8.up.railway.app/download');
-            if (response.ok) {
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                a.download = 'data.xlsx';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            } else {
-                alert('Error al descargar el archivo.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al descargar el archivo.');
-        }
+document.getElementById('download-excel').addEventListener('click', function() {
+    fetch('/download')
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'users_data.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
     });
 });
 
