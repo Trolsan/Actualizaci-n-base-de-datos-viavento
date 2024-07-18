@@ -4,7 +4,7 @@ document.getElementById('user-form').addEventListener('submit', function(event) 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    fetch('/submit', {
+    fetch('postgresql://postgres:figWHPeRMbNkCjhPBgGhSmyfqYaOapOu@monorail.proxy.rlwy.net:30875/railway/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ document.getElementById('user-form').addEventListener('submit', function(event) 
 });
 
 document.getElementById('download-btn').addEventListener('click', function() {
-    fetch('/download')
+    fetch('postgresql://postgres:figWHPeRMbNkCjhPBgGhSmyfqYaOapOu@monorail.proxy.rlwy.net:30875/railway/download')
     .then(response => response.blob())
     .then(blob => {
         const url = window.URL.createObjectURL(blob);
