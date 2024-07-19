@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, jsonify, send_file
-from flask_cors import CORS # type: ignore
-from pymongo import MongoClient # type: ignore
+from flask_cors import CORS 
+from pymongo import MongoClient 
 #import openpyxl
 
 app = Flask(__name__)

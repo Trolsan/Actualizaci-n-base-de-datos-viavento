@@ -21,19 +21,19 @@ document.getElementById('form').addEventListener('submit', async (e) => {
 });
 
 //document.getElementById('download-btn').addEventListener('click', function() {
-    fetch('/download')
-        .then(response => response.blob())
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'residents.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-        })
-        .catch(error => console.error('Error:', error));
+//    fetch('/download')
+//        .then(response => response.blob())
+//        .then(blob => {
+//            const url = window.URL.createObjectURL(blob);
+//            const a = document.createElement('a');
+//            a.style.display = 'none';
+//            a.href = url;
+//            a.download = 'residents.xlsx';
+//            document.body.appendChild(a);
+//            a.click();
+//            window.URL.revokeObjectURL(url);
+//        })
+//        .catch(error => console.error('Error:', error));
 //});
 
 
