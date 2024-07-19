@@ -1,8 +1,11 @@
-document.getElementById('user-form').addEventListener('submit', function(event) {
+document.getElementById('form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
 
     fetch('/submit', {
         method: 'POST',
@@ -13,25 +16,29 @@ document.getElementById('user-form').addEventListener('submit', function(event) 
     })
     .then(response => response.json())
     .then(result => {
-        alert(result.message);
-        console.log(result)
+        console.log(result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 });
 
 document.getElementById('download-btn').addEventListener('click', function() {
     fetch('/download')
-    .then(response => response.blob())
-    .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'users_data.xlsx';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-    });
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'residents.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('Error:', error));
 });
+
 
 
 function addResidente() {
