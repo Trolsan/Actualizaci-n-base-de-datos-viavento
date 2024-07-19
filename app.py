@@ -9,8 +9,8 @@ CORS(app)
 # Configuración de la conexión a MongoDB
 # Asegúrate de definir tu variable de entorno MONGO_URI en Railway
 client = MongoClient(os.getenv('MONGO_URI'))
-db = client['nombre_base_datos']
-collection = db['nombre_coleccion']
+db = client['test']
+collection = db['usuarios']
 
 @app.route('/submit', methods=['POST'])
 def submit():
