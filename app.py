@@ -65,7 +65,7 @@ Base.metadata.create_all(engine)
 def index():
     return render_template('index.html')
 
-@app.route('/submit', methods=['POST'])
+@app.route('monorail.proxy.rlwy.net:30875/submit', methods=['POST'])
 def submit():
     data = request.json
     new_user = User(
@@ -113,7 +113,7 @@ def submit():
 
 
 
-@app.route('/download', methods=['GET'])
+@app.route('monorail.proxy.rlwy.net:30875/download', methods=['GET'])
 def download():
     users = session.query(User).all()
 
