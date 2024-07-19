@@ -1,29 +1,26 @@
-document.getElementById('form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-
-    fetch('/submit', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-        console.log(result);
-    })
-    .catch(error => {
+document.getElementById('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const jsonData = {};
+    data.forEach((value, key) => jsonData[key] = value);
+    try {
+        const response = await fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
+        const result = await response.json();
+        alert(result.message);
+    } catch (error) {
         console.error('Error:', error);
-    });
+        alert('Error al enviar los datos');
+    }
 });
 
-document.getElementById('download-btn').addEventListener('click', function() {
+//document.getElementById('download-btn').addEventListener('click', function() {
     fetch('/download')
         .then(response => response.blob())
         .then(blob => {
@@ -37,7 +34,7 @@ document.getElementById('download-btn').addEventListener('click', function() {
             window.URL.revokeObjectURL(url);
         })
         .catch(error => console.error('Error:', error));
-});
+//});
 
 
 

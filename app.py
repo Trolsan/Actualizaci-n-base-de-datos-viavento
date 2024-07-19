@@ -2,33 +2,28 @@ import os
 from flask import Flask, render_template, request, jsonify, send_file
 from flask_cors import CORS # type: ignore
 from pymongo import MongoClient # type: ignore
-import openpyxl
+#import openpyxl
 
 app = Flask(__name__)
 CORS(app)  # Habilita CORS en toda la aplicación
 
-# Configura la conexión a la base de datos MongoDB
-MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://mongo:WCPqrmtCDXLNtIyeMdauXSnyrseRhHlK@mongodb.railway.internal:27017')
-client = MongoClient(MONGO_URL)
-db = client.get_database()
+# Configuración de la conexión a MongoDB
+client = MongoClient(os.getenv('mongodb://mongo:WCPqrmtCDXLNtIyeMdauXSnyrseRhHlK@mongodb.railway.internal:27017'))
+db = client['test']
+collection = db['usuarios']
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-# Ruta para recibir los datos del formulario
 @app.route('/submit', methods=['POST'])
 def submit():
-    data = request.get_json()
-    db.residents.insert_one(data)
-    response = {'status': 'success', 'message': 'Datos recibidos correctamente'}
-    return jsonify(response)
+    data = request.json
+    # Guardar los datos en MongoDB
+    collection.insert_one(data)
+    return jsonify({"message": "Datos guardados con éxito"}), 201
 
 
 
 # Ruta para descargar los datos en un archivo Excel
-@app.route('/download', methods=['GET'])
-def download():
+#@app.route('/download', methods=['GET'])
+#def download():
     residents = db.residents.find()
     wb = openpyxl.Workbook()
     ws = wb.active
