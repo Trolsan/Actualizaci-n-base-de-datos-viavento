@@ -4,7 +4,7 @@ document.getElementById('user-form').addEventListener('submit', function(event) 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    fetch('postgresql://postgres:figWHPeRMbNkCjhPBgGhSmyfqYaOapOu@monorail.proxy.rlwy.net:30875/railway/submit', {
+    fetch('/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -14,15 +14,17 @@ document.getElementById('user-form').addEventListener('submit', function(event) 
     .then(response => response.json())
     .then(result => {
         alert(result.message);
+        console.log(result)
     });
 });
 
 document.getElementById('download-btn').addEventListener('click', function() {
-    fetch('postgresql://postgres:figWHPeRMbNkCjhPBgGhSmyfqYaOapOu@monorail.proxy.rlwy.net:30875/railway/download')
+    fetch('/download')
     .then(response => response.blob())
     .then(blob => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
+        a.style.display = 'none';
         a.href = url;
         a.download = 'users_data.xlsx';
         document.body.appendChild(a);

@@ -1,16 +1,17 @@
 from flask import Flask, render_template, request, jsonify, send_file
-from flask_cors import CORS
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from flask_cors import CORS # type: ignore
+from sqlalchemy import create_engine, Column, Integer, String # type: ignore
+from sqlalchemy.ext.declarative import declarative_base # type: ignore
+from sqlalchemy.orm import sessionmaker # type: ignore
 import openpyxl
+import psycopg2 # type: ignore
 import os
 
 app = Flask(__name__)
 CORS(app)
 
 # Configuración de la base de datos
-DATABASE_URL = "postgresql://postgres:figWHPeRMbNkCjhPBgGhSmyfqYaOapOu@monorail.proxy.rlwy.net:30875/railway"
+DATABASE_URL = os.environ.get("postgresql://postgres:figWHPeRMbNkCjhPBgGhSmyfqYaOapOu@monorail.proxy.rlwy.net:30875/railway")
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -65,9 +66,9 @@ Base.metadata.create_all(engine)
 def index():
     return render_template('index.html')
 
-@app.route('monorail.proxy.rlwy.net:30875/submit', methods=['POST'])
+@app.route('/submit', methods=['POST'])
 def submit():
-    data = request.json
+    data = request.get_json()
     new_user = User(
         nombre_residente=data['nombre_residente'],
         telefono_residente=data['telefono_residente'],
@@ -109,11 +110,12 @@ def submit():
     )
     session.add(new_user)
     session.commit()
-    return jsonify({"message": "Data saved successfully"}), 200
+    response = {'status': 'success', 'message': 'Datos recibidos correctamente'}
+    return jsonify(response)
 
 
 
-@app.route('monorail.proxy.rlwy.net:30875/download', methods=['GET'])
+@app.route('/download', methods=['GET'])
 def download():
     users = session.query(User).all()
 
@@ -147,3 +149,6 @@ def download():
 
     return send_file(file_path, as_attachment=True)
 
+if __name__ == '__main__':
+    Base.metadata.create_all(engine)
+    app.run(debug=True)
