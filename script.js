@@ -5,7 +5,7 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     const jsonData = {};
     data.forEach((value, key) => jsonData[key] = value);
     try {
-        const response = await fetch('/submit', {
+        const response = await fetch('mongodb://mongo:WCPqrmtCDXLNtIyeMdauXSnyrseRhHlK@monorail.proxy.rlwy.net:57154/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
