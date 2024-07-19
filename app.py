@@ -8,8 +8,8 @@ app = Flask(__name__)
 CORS(app)  # Habilita CORS en toda la aplicación
 
 # Configura la conexión a la base de datos MongoDB
-MONGO_URI = os.environ.get('MONGO_URI', 'mongodb://mongo:WCPqrmtCDXLNtIyeMdauXSnyrseRhHlK@mongodb.railway.internal:27017')
-client = MongoClient(MONGO_URI)
+MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://mongo:WCPqrmtCDXLNtIyeMdauXSnyrseRhHlK@mongodb.railway.internal:27017')
+client = MongoClient(MONGO_URL)
 db = client.get_database()
 
 @app.route('/')
